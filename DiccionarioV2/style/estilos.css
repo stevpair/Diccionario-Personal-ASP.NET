@@ -1,0 +1,20 @@
+﻿     #searchbox {
+  background-color: #eaf8fc;
+  background-image: linear-gradient(#fff, #d4e8ec);
+  border-radius: 35px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #c4d9df #a4c3ca #83afb7;
+  width: 250px;
+  height: 25px;
+  padding: 8px;
+  overflow: hidden;
+}
+#cabecera{
+    text-align:center;
+}
+#contenido{
+    width:192px;
+    padding-left:500px;
+}
+

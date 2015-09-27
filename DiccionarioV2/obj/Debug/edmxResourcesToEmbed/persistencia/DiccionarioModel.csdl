@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DictionaryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Antonimo">
+    <Key>
+      <PropertyRef Name="IdAntonimo" />
+    </Key>
+    <Property Name="IdPalabra" Type="Int32" Nullable="false" />
+    <Property Name="IdAntonimo" Type="Int32" Nullable="false" />
+    <Property Name="Antonimo1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Palabra" Relationship="Self.FK_Antonimo" FromRole="Antonimo" ToRole="Palabra" />
+  </EntityType>
+  <EntityType Name="Palabra">
+    <Key>
+      <PropertyRef Name="IdPalabra" />
+    </Key>
+    <Property Name="IdUsuario" Type="Int32" Nullable="false" />
+    <Property Name="IdPalabra" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Palabra1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PrimeraLetra" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="UltimaLetra" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="Tamaño" Type="Int32" />
+    <Property Name="Cant_Vocales" Type="Int32" />
+    <Property Name="Cant_Consonates" Type="Int32" />
+    <Property Name="Significado" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Antonimo" Relationship="Self.FK_Antonimo" FromRole="Palabra" ToRole="Antonimo" />
+    <NavigationProperty Name="Sinonimo" Relationship="Self.FK_Sinonimo" FromRole="Palabra" ToRole="Sinonimo" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK_Usuario" FromRole="Palabra" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="Sinonimo">
+    <Key>
+      <PropertyRef Name="IdSinonimo" />
+    </Key>
+    <Property Name="IdPalabra" Type="Int32" Nullable="false" />
+    <Property Name="IdSinonimo" Type="Int32" Nullable="false" />
+    <Property Name="Sinonimo1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Palabra" Relationship="Self.FK_Sinonimo" FromRole="Sinonimo" ToRole="Palabra" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Nickname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Contraseña" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Palabra" Relationship="Self.FK_Usuario" FromRole="Usuario" ToRole="Palabra" />
+  </EntityType>
+  <Association Name="FK_Antonimo">
+    <End Role="Palabra" Type="Self.Palabra" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Antonimo" Type="Self.Antonimo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Palabra">
+        <PropertyRef Name="IdPalabra" />
+      </Principal>
+      <Dependent Role="Antonimo">
+        <PropertyRef Name="IdPalabra" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Sinonimo">
+    <End Role="Palabra" Type="Self.Palabra" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Sinonimo" Type="Self.Sinonimo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Palabra">
+        <PropertyRef Name="IdPalabra" />
+      </Principal>
+      <Dependent Role="Sinonimo">
+        <PropertyRef Name="IdPalabra" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Palabra" Type="Self.Palabra" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Palabra">
+        <PropertyRef Name="IdUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DictionaryEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Antonimo" EntityType="Self.Antonimo" />
+    <EntitySet Name="Palabra" EntityType="Self.Palabra" />
+    <EntitySet Name="Sinonimo" EntityType="Self.Sinonimo" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+    <AssociationSet Name="FK_Antonimo" Association="Self.FK_Antonimo">
+      <End Role="Palabra" EntitySet="Palabra" />
+      <End Role="Antonimo" EntitySet="Antonimo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Sinonimo" Association="Self.FK_Sinonimo">
+      <End Role="Palabra" EntitySet="Palabra" />
+      <End Role="Sinonimo" EntitySet="Sinonimo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Usuario" Association="Self.FK_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Palabra" EntitySet="Palabra" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

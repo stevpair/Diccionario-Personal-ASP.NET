@@ -1,0 +1,45 @@
+﻿div#login {
+            margin: 0 auto;
+            width:400px;
+            margin-top:200px;
+            border:solid 1px #DDD;
+            border-radius:5px;
+            box-shadow:0px 0px 20px 5px #999;
+            padding:20px 15px 30px 15px;
+        }
+        div#login label{
+            display:block;
+        }
+        div#login input[type="text"],
+        div#login input[type="password"]{
+            width:98%;
+            border:solid 1px #AAA;
+            height:25px;
+            padding:3px 5px;
+            border-radius:7px;
+        }
+        .campo{
+            margin-bottom:7px;
+        }
+        .divBotones{
+            text-align:right;
+        }
+        .divBotones input[type="submit"],
+        .divBotones button{
+            height:30px;
+            border-radius:5px;
+            border:solid 1px;
+        }
+        .btn-success{
+            background-color:#89B332;
+        }
+        .btn-primary{
+            background-color:#2367f5;
+            color:#FFF;
+        }
+        h1{
+            color:#89B332;
+        }
+        #mensaje{
+            color:#F33;
+        }
